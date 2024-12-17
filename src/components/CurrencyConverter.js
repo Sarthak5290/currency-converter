@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { currencies } from "./currencies.js"; // Ensure this file has your currencies data
-import switchIcon from "../images/switchImage.png"; // Adjust the path to your switch icon
+import { currencies } from "./currencies.js"; 
+import switchIcon from "../images/switchImage.png"; 
 
 const CurrencyConverter = () => {
   const [fromCurrency, setFromCurrency] = useState("USD");
@@ -65,31 +65,42 @@ const CurrencyConverter = () => {
   const [showToDropdown, setShowToDropdown] = useState(false);
 
   return (
-    <div className={`max-w-md mx-auto p-6 bg-gray-800 text-white shadow-xl rounded-xl space-y-6 mt-8 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`}>
-      <h1 className="text-3xl font-bold text-center mb-6">Currency Converter</h1>
+    <div className={`max-w-md mx-auto p-6 bg-gradient-to-br from-blue-900 to-indigo-900 text-white shadow-2xl rounded-2xl space-y-6 mt-8 transition-all duration-1000 ease-in-out ${fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <h1 className="text-4xl font-extrabold text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">
+        Currency Converter
+      </h1>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         <div>
-          <label htmlFor="fromAmount" className="block text-lg font-medium mb-2">Amount:</label>
+          <label htmlFor="fromAmount" className="block text-lg font-semibold mb-2 text-blue-200">Amount:</label>
           <input
             id="fromAmount"
             type="text"
             value={formatCurrencyInput(fromCurrency, amount)}
             onChange={handleAmountChange}
-            placeholder="Amount"
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+            placeholder="Enter amount"
+            className="w-full px-4 py-3 bg-gray-800 border-2 border-blue-700 rounded-xl text-white focus:ring-4 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out placeholder-gray-500"
           />
         </div>
 
         <div>
-          <label className="block text-lg font-medium mb-2">From:</label>
+          <label className="block text-lg font-semibold mb-2 text-blue-200">From:</label>
           <div className="relative">
-            <div onClick={() => setShowFromDropdown(!showFromDropdown)} className="flex items-center bg-gray-700 rounded-lg p-2 cursor-pointer">
-              <img src={getFlagUrl(fromCurrency)} alt={fromCurrency} className="w-10 h-10 object-cover" />
-              <span className="ml-2">{currencies.find((c) => c.code === fromCurrency).name} ({fromCurrency})</span>
+            <div 
+              onClick={() => setShowFromDropdown(!showFromDropdown)} 
+              className="flex items-center bg-gray-800 rounded-xl p-3 cursor-pointer hover:bg-gray-700 transition duration-200 border-2 border-transparent hover:border-blue-600"
+            >
+              <img 
+                src={getFlagUrl(fromCurrency)} 
+                alt={fromCurrency} 
+                className="w-10 h-10 object-cover rounded-full mr-3 shadow-md" 
+              />
+              <span className="font-medium">
+                {currencies.find((c) => c.code === fromCurrency).name} ({fromCurrency})
+              </span>
             </div>
             {showFromDropdown && (
-              <ul className="absolute z-10 bg-gray-800 rounded-lg shadow-lg mt-1 w-full max-h-60 overflow-y-auto">
+              <ul className="absolute z-20 bg-gray-800 rounded-xl shadow-2xl mt-2 w-full max-h-64 overflow-y-auto border border-blue-700">
                 {currencies.map((currency) => (
                   <li
                     key={currency.code}
@@ -97,9 +108,13 @@ const CurrencyConverter = () => {
                       setFromCurrency(currency.code);
                       setShowFromDropdown(false);
                     }}
-                    className="flex items-center p-2 hover:bg-gray-700 cursor-pointer"
+                    className="flex items-center p-3 hover:bg-blue-900 cursor-pointer transition duration-150"
                   >
-                    <img src={getFlagUrl(currency.code)} alt={currency.code} className="inline-block w-5 h-5 mr-2" />
+                    <img 
+                      src={getFlagUrl(currency.code)} 
+                      alt={currency.code} 
+                      className="inline-block w-6 h-6 mr-3 rounded-full" 
+                    />
                     <span>{currency.name} ({currency.code}) {currency.symbol}</span>
                   </li>
                 ))}
@@ -111,21 +126,30 @@ const CurrencyConverter = () => {
         <div className="flex justify-center">
           <button
             onClick={handleSwitchCurrencies}
-            className="p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition-transform duration-200 transform hover:rotate-180"
+            className="p-3 bg-blue-700 rounded-full hover:bg-blue-600 transition-all duration-300 transform hover:rotate-180 hover:scale-110 shadow-lg"
           >
             <img src={switchIcon} alt="Switch" className="w-6 h-6" />
           </button>
         </div>
 
         <div>
-          <label className="block text-lg font-medium mb-2">To:</label>
+          <label className="block text-lg font-semibold mb-2 text-blue-200">To:</label>
           <div className="relative">
-            <div onClick={() => setShowToDropdown(!showToDropdown)} className="flex items-center bg-gray-700 rounded-lg p-2 cursor-pointer">
-              <img src={getFlagUrl(toCurrency)} alt={toCurrency} className="w-10 h-10 object-cover" />
-              <span className="ml-2">{currencies.find((c) => c.code === toCurrency).name} ({toCurrency})</span>
+            <div 
+              onClick={() => setShowToDropdown(!showToDropdown)} 
+              className="flex items-center bg-gray-800 rounded-xl p-3 cursor-pointer hover:bg-gray-700 transition duration-200 border-2 border-transparent hover:border-blue-600"
+            >
+              <img 
+                src={getFlagUrl(toCurrency)} 
+                alt={toCurrency} 
+                className="w-10 h-10 object-cover rounded-full mr-3 shadow-md" 
+              />
+              <span className="font-medium">
+                {currencies.find((c) => c.code === toCurrency).name} ({toCurrency})
+              </span>
             </div>
             {showToDropdown && (
-              <ul className="absolute z-10 bg-gray-800 rounded-lg shadow-lg mt-1 w-full max-h-60 overflow-y-auto">
+              <ul className="absolute z-20 bg-gray-800 rounded-xl shadow-2xl mt-2 w-full max-h-64 overflow-y-auto border border-blue-700">
                 {currencies.map((currency) => (
                   <li
                     key={currency.code}
@@ -133,9 +157,13 @@ const CurrencyConverter = () => {
                       setToCurrency(currency.code);
                       setShowToDropdown(false);
                     }}
-                    className="flex items-center p-2 hover:bg-gray-700 cursor-pointer"
+                    className="flex items-center p-3 hover:bg-blue-900 cursor-pointer transition duration-150"
                   >
-                    <img src={getFlagUrl(currency.code)} alt={currency.code} className="inline-block w-5 h-5 mr-2" />
+                    <img 
+                      src={getFlagUrl(currency.code)} 
+                      alt={currency.code} 
+                      className="inline-block w-6 h-6 mr-3 rounded-full" 
+                    />
                     <span>{currency.name} ({currency.code}) {currency.symbol}</span>
                   </li>
                 ))}
@@ -147,16 +175,24 @@ const CurrencyConverter = () => {
 
       <button
         onClick={handleConvert}
-        className="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transform transition-transform duration-200 hover:scale-105"
+        className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-700 text-white rounded-xl font-bold hover:from-blue-700 hover:to-purple-800 transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
       >
         Convert
       </button>
 
       <div className="text-center">
-        {loading && <p className="text-gray-400">Converting...</p>}
-        {error && <p className="text-red-500">{error}</p>}
+        {loading && (
+          <p className="text-blue-300 animate-pulse">
+            Converting...
+          </p>
+        )}
+        {error && (
+          <p className="text-red-400 font-semibold animate-bounce">
+            {error}
+          </p>
+        )}
         {convertedAmount && (
-          <h2 className="text-2xl font-bold mt-4">
+          <h2 className="text-3xl font-bold mt-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
             {currencies.find((c) => c.code === fromCurrency)?.symbol}
             {amount} {fromCurrency} ={" "}
             {currencies.find((c) => c.code === toCurrency)?.symbol}
